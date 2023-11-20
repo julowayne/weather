@@ -25,7 +25,7 @@ export default {
     owApiKey: import.meta.env.VITE_OW_API_KEY,
     searchCity: {
       name: '',
-      temperature: null
+      temperature: null as number | null
     },
     errorMsg: ''
   }),
@@ -56,7 +56,7 @@ export default {
 
         this.searchCity.name = response.data.name
         this.searchCity.temperature = Math.round(response.data.main.temp)
-      } catch (error) {
+      } catch (error: any) {
         if (error.response) {
           if (error.response.status === 400)
             this.errorMsg = "The city you are looking for doesn't exist"

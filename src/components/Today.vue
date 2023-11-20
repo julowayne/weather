@@ -2,7 +2,10 @@
   <div class="weatherToday" @click="showDetails">
     <div id="today">
       <div>{{ getDay }} - {{ getHour }}</div>
-      <div>{{ city }} {{ todayTemperature }} °c</div>
+      <div>
+        {{ city }} {{ todayTemperature }} °c
+        <font-awesome-icon :icon="['fas', weatherIcon]" />
+      </div>
     </div>
   </div>
   <div v-if="showWeatherDetails === true">
@@ -13,30 +16,43 @@
 <script lang="ts">
 import dayjs from 'dayjs'
 import WeatherDayDetails from '@/components/DayDetails.vue'
+import { WeatherApi } from '@/services/weather'
 
 export default {
   name: 'WeatherToday',
   components: { WeatherDayDetails },
+
   data: () => ({
     showWeatherDetails: false
   }),
+
   props: {
     city: String,
     hour: String,
+    condition: String,
     todayTemperature: Number,
     weatherTodayDetails: Array
   },
+
   methods: {
     showDetails() {
       this.showWeatherDetails = !this.showWeatherDetails
     }
   },
+  
   computed: {
     getDay() {
       return dayjs(this.hour).format('MMMM DD')
     },
+
     getHour() {
-      return dayjs().hour(12).format('hh:mm a')
+      return dayjs().locale('fr').format('HH:mm')
+    },
+
+    weatherIcon(){
+      const icon = this.condition.toLowerCase()
+
+      return WeatherApi.getIcon(icon)
     }
   }
 }
