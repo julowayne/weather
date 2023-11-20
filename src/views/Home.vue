@@ -24,6 +24,7 @@ import WeatherToday from '@/components/Today.vue'
 import WeatherForecast from '@/components/Forecast.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 
+
 export default {
   name: 'Home',
 
@@ -37,14 +38,14 @@ export default {
     owApiKey: import.meta.env.VITE_OW_API_KEY,
     city: '',
     hour: '',
-    todayTemperature: null,
-    latitude: null,
-    longitude: null,
-    weathers: [],
-    weatherTodayDetails: [],
+    todayTemperature: null as number | null,
+    latitude: null as number | null,
+    longitude: null as number | null,
+    weathers: [] as { temperature: number, day: string, weatherCondition: string }[],
+    weatherTodayDetails: [] as { temperature: number, day: string, weatherCondition: string }[],
     weatherBackground: '',
     geolocationDenied: '',
-    errors: []
+    errors: [] as { message: string }[]
   }),
 
   methods: {
@@ -55,7 +56,7 @@ export default {
         maximumAge: 0
       }
 
-      const success = (pos) => {
+      const success = (pos: GeolocationPosition) => {
         const crd = pos.coords
         this.latitude = crd.latitude
         this.longitude = crd.longitude
@@ -63,7 +64,7 @@ export default {
         this.getWeatherData()
       }
 
-      const error = (err) => {
+      const error = (err: GeolocationPositionError) => {
         console.warn(`ERROR (${err.code}): ${err.message}`)
         this.errors = [
           {
@@ -102,10 +103,12 @@ export default {
         this.hour = weather.list[0].dt_txt
         this.weathers = this.getDaysData(weather.list)
         this.weatherTodayDetails = this.getTodayDetailsData(weather.list)
+        // Ecremer les données reçues par l'api
       }
     },
 
-    getTodayDetailsData(weatherListDetails) {
+    // Preciser le type de données dans le tableau 
+    getTodayDetailsData(weatherListDetails: []) {
       // TODO afficher les détails des 24 prochaines heures
       const nextHours = weatherListDetails.slice(0, 9)
 
@@ -118,7 +121,7 @@ export default {
       return dayDetails
     },
 
-    getDaysData(weatherList) {
+    getDaysData(weatherList: []) {
       const forecastDays = [7, 15, 23, 31, 39]
       const data = forecastDays.map((forecastDay) => ({
         day: weatherList[forecastDay].dt_txt,
