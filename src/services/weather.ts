@@ -16,17 +16,22 @@ export class WeatherApi {
     }
   }
 
-  static getIcon(name: string){
-    if (name === 'clouds') {
-      return 'cloud'
-    } else if (name === 'sun') {
-      return 'sun'
-    } else if (name === 'rain') {
-      return 'cloud-showers-heavy'
-    } else if (name === 'thunderstorm') {
-      return 'cloud-bolt'
-    } else {
-      return ''
+  static getIcon(name: string) {
+    switch (name) {
+      case 'clouds':
+        return 'cloud'
+
+      case 'sun':
+        return 'sun'
+
+      case 'thunderstorm':
+        return 'cloud-bolt'
+
+      case 'rain':
+        return 'cloud-showers-heavy'
+
+      default:
+        return ''
     }
   }
 }

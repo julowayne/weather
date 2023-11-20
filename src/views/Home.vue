@@ -25,10 +25,10 @@ import WeatherToday from '@/components/Today.vue'
 import WeatherForecast from '@/components/Forecast.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 
-interface Weather {
-  day: string
+export interface ThreeHoursWeather {
+  dateTime: Date
   temperature: number
-  weatherCondition: string
+  trend: string
 }
 
 export default {
@@ -48,8 +48,8 @@ export default {
     todayTemperature: null as number | null,
     latitude: null as number | null,
     longitude: null as number | null,
-    weathers: [] as Weather[],
-    weatherTodayDetails: [] as Weather[],
+    weathers: [] as ThreeHoursWeather[],
+    weatherTodayDetails: [] as ThreeHoursWeather[],
     weatherBackground: '',
     geolocationDenied: '',
     errors: [] as { message: string }[]
@@ -105,36 +105,45 @@ export default {
           }
         ]
       } else {
+        console.log(weather)
+
+        const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
+          dateTime: range.dt_txt,
+          temperature: range.main.temp_max,
+          trend: range.weather[0].main
+        }))
+
         this.city = weather.city.name
         this.todayTemperature = Math.round(weather.list[0].main.temp)
         this.hour = weather.list[0].dt_txt
         this.condition = weather.list[0].weather[0].main
-        this.weathers = this.getDaysData(weather.list)
-        this.weatherTodayDetails = this.getTodayDetailsData(weather.list)
+        this.weathers = this.getDaysData(fiveDaysForecast)
+        this.weatherTodayDetails = this.getTodayDetailsData(fiveDaysForecast)
         // Ecremer les données reçues par l'api
       }
     },
 
     // Preciser le type de données dans le tableau
-    getTodayDetailsData(weatherListDetails: []) {
+    getTodayDetailsData(weatherListDetails: ThreeHoursWeather[]) {
       // TODO afficher les détails des 24 prochaines heures
       const nextHours = weatherListDetails.slice(0, 9)
 
       const dayDetails = nextHours.map((hour) => ({
-        day: hour.dt_txt,
-        temperature: Math.round(hour.main.temp_max),
-        weatherCondition: hour.weather[0].main
+        dateTime: hour.dateTime,
+        temperature: Math.round(hour.temperature),
+        trend: hour.trend
       }))
 
       return dayDetails
     },
 
-    getDaysData(weatherList: []) {
+    getDaysData(weatherList: ThreeHoursWeather[]) {
       const forecastDays = [7, 15, 23, 31, 39]
+
       const data = forecastDays.map((forecastDay) => ({
-        day: weatherList[forecastDay].dt_txt,
-        temperature: Math.round(weatherList[forecastDay].main.temp_max),
-        weatherCondition: weatherList[forecastDay].weather[0].main
+        dateTime: weatherList[forecastDay].dateTime,
+        temperature: Math.round(weatherList[forecastDay].temperature),
+        trend: weatherList[forecastDay].trend
       }))
 
       return data

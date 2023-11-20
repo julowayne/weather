@@ -39,7 +39,7 @@ export default {
       this.showWeatherDetails = !this.showWeatherDetails
     }
   },
-  
+
   computed: {
     getDay() {
       return dayjs(this.hour).format('MMMM DD')
@@ -49,7 +49,7 @@ export default {
       return dayjs().locale('fr').format('HH:mm')
     },
 
-    weatherIcon(){
+    weatherIcon() {
       const icon = this.condition.toLowerCase()
 
       return WeatherApi.getIcon(icon)

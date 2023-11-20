@@ -7,13 +7,8 @@
 
 <script lang="ts">
 import WeatherForecastDay from '@/components/ForecastDay.vue'
+import type { ThreeHoursWeather } from '@/views/Home.vue'
 import type { PropType } from 'vue'
-
-interface Weather {
-  day: string
-  temperature: number
-  weatherCondition: string
-}
 
 export default {
   name: 'Forecast',
@@ -24,7 +19,7 @@ export default {
 
   props: {
     weathers: {
-      type: Object as PropType<Weather>
+      type: Array as PropType<ThreeHoursWeather[]>
     }
   }
 }

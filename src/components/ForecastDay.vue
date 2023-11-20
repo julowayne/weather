@@ -15,6 +15,8 @@
 <script lang="ts">
 import dayjs from 'dayjs'
 import { WeatherApi } from '@/services/weather'
+import type { ThreeHoursWeather } from '@/views/Home.vue'
+import type { PropType } from 'vue'
 
 export default {
   name: 'ForecastDay',
@@ -22,18 +24,21 @@ export default {
     icon: ''
   }),
   props: {
-    weather: Object
+    weather: {
+      type: Object as PropType<ThreeHoursWeather>,
+      required: true
+    }
   },
   computed: {
     day() {
-      return dayjs(this.weather.day).format('dddd MMM')
+      return dayjs(this.weather.dateTime).format('dddd MMM')
     },
 
     weatherIcons() {
-      const icon = this.weather.weatherCondition.toLowerCase()
+      this.weather
+      const icon = this.weather.trend.toLowerCase()
 
       return WeatherApi.getIcon(icon)
-
     }
   }
 }
