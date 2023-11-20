@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="day-details">
     <WeatherTodayDetails
       v-for="(weatherToday, index) in weatherTodayDetails"
       :key="index"
@@ -21,18 +21,21 @@ export default {
 </script>
 
 <style scoped>
-.details {
+.day-details {
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  min-width: 350px;
+  flex-direction: row;
   padding: 10px;
   border-radius: 4px;
+  width: 350px;
+  overflow-x: scroll;
   background-color: #2c3e50;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   color: white;
   font-size: bold;
-  cursor: pointer;
+  margin-top: 10px;
+}
+
+.day-details::-webkit-scrollbar {
+  display: none;
 }
 </style>
