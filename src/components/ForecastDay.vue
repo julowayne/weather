@@ -6,7 +6,7 @@
       </span>
       <span> {{ weather.temperature }} ° </span>
       <span id="img">
-        <img class="weather-icon" v-if="weather" :src="weatherImages" alt="weather image" />
+        <font-awesome-icon v-if="weather" :icon="['fas', weatherIcons]" />
       </span>
     </div>
   </div>
@@ -14,23 +14,26 @@
 
 <script lang="ts">
 import dayjs from 'dayjs'
+import { WeatherApi } from '@/services/weather'
 
 export default {
   name: 'ForecastDay',
-
+  data: () => ({
+    icon: ''
+  }),
   props: {
     weather: Object
   },
-
   computed: {
     day() {
       return dayjs(this.weather.day).format('dddd MMM')
     },
 
-    weatherImages() {
-      const futureWeather = this.weather.weatherCondition.toLowerCase()
-      console.log(import.meta.url)
-      return new URL(`../assets/${futureWeather}.png`, import.meta.url).href
+    weatherIcons() {
+      const icon = this.weather.weatherCondition.toLowerCase()
+
+      return WeatherApi.getIcon(icon)
+
     }
   }
 }

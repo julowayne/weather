@@ -7,6 +7,7 @@
           :todayTemperature="todayTemperature"
           :city="city"
           :hour="hour"
+          :condition="condition"
           :weatherTodayDetails="weatherTodayDetails"
         />
         <WeatherForecast :weathers="weathers" />
@@ -24,6 +25,11 @@ import WeatherToday from '@/components/Today.vue'
 import WeatherForecast from '@/components/Forecast.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 
+interface Weather {
+  day: string
+  temperature: number
+  weatherCondition: string
+}
 
 export default {
   name: 'Home',
@@ -38,11 +44,12 @@ export default {
     owApiKey: import.meta.env.VITE_OW_API_KEY,
     city: '',
     hour: '',
+    condition: '',
     todayTemperature: null as number | null,
     latitude: null as number | null,
     longitude: null as number | null,
-    weathers: [] as { temperature: number, day: string, weatherCondition: string }[],
-    weatherTodayDetails: [] as { temperature: number, day: string, weatherCondition: string }[],
+    weathers: [] as Weather[],
+    weatherTodayDetails: [] as Weather[],
     weatherBackground: '',
     geolocationDenied: '',
     errors: [] as { message: string }[]
@@ -84,7 +91,7 @@ export default {
         appid: this.owApiKey,
         units: 'metric'
       })
-      console.log(weather)
+
       if (weather === 400) {
         this.errors = [
           {
@@ -101,13 +108,14 @@ export default {
         this.city = weather.city.name
         this.todayTemperature = Math.round(weather.list[0].main.temp)
         this.hour = weather.list[0].dt_txt
+        this.condition = weather.list[0].weather[0].main
         this.weathers = this.getDaysData(weather.list)
         this.weatherTodayDetails = this.getTodayDetailsData(weather.list)
         // Ecremer les données reçues par l'api
       }
     },
 
-    // Preciser le type de données dans le tableau 
+    // Preciser le type de données dans le tableau
     getTodayDetailsData(weatherListDetails: []) {
       // TODO afficher les détails des 24 prochaines heures
       const nextHours = weatherListDetails.slice(0, 9)
