@@ -29,7 +29,8 @@ export default {
 
     weatherImages() {
       const futureWeather = this.weather.weatherCondition.toLowerCase()
-      return new URL(`../../../assets/img/${futureWeather}.png`, import.meta.url).href
+      console.log(import.meta.url)
+      return new URL(`../assets/${futureWeather}.png`, import.meta.url).href
     }
   }
 }
