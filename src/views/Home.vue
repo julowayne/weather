@@ -106,7 +106,6 @@ export default {
         ]
       } else {
         console.log(weather)
-
         const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
           dateTime: range.dt_txt,
           temperature: range.main.temp_max,
@@ -119,13 +118,10 @@ export default {
         this.condition = weather.list[0].weather[0].main
         this.weathers = this.getDaysData(fiveDaysForecast)
         this.weatherTodayDetails = this.getTodayDetailsData(fiveDaysForecast)
-        // Ecremer les données reçues par l'api
       }
     },
 
-    // Preciser le type de données dans le tableau
     getTodayDetailsData(weatherListDetails: ThreeHoursWeather[]) {
-      // TODO afficher les détails des 24 prochaines heures
       const nextHours = weatherListDetails.slice(0, 9)
 
       const dayDetails = nextHours.map((hour) => ({

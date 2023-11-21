@@ -8,11 +8,17 @@
 </template>
 
 <script lang="ts">
+
+import type { PropType } from 'vue'
+
 export default {
   name: 'ErrorMessages',
 
-  props: {
-    errors: Array
+  props :{
+    errors: {
+      type: Array as PropType<{ message: string }[]>,
+      required: true
+    }
   }
 }
 </script>

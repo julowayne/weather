@@ -10,11 +10,15 @@
 
 <script lang="ts">
 import WeatherTodayDetails from '@/components/TodayDetails.vue'
+import type { ThreeHoursWeather } from '@/views/Home.vue'
+import type { PropType } from 'vue'
 
 export default {
   name: 'DayDetails',
   props: {
-    weatherTodayDetails: Array
+    weatherTodayDetails: {
+      type: Array as PropType<ThreeHoursWeather[]>
+    }
   },
   components: { WeatherTodayDetails }
 }

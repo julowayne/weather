@@ -18,6 +18,9 @@ import dayjs from 'dayjs'
 import WeatherDayDetails from '@/components/DayDetails.vue'
 import { WeatherApi } from '@/services/weather'
 
+import type { ThreeHoursWeather } from '@/views/Home.vue'
+import type { PropType } from 'vue'
+
 export default {
   name: 'WeatherToday',
   components: { WeatherDayDetails },
@@ -29,9 +32,14 @@ export default {
   props: {
     city: String,
     hour: String,
-    condition: String,
+    condition: {
+      type: String, 
+      required: true, 
+    },
     todayTemperature: Number,
-    weatherTodayDetails: Array
+    weatherTodayDetails: {
+      type: Array as PropType<ThreeHoursWeather[]>
+    }
   },
 
   methods: {
@@ -50,6 +58,7 @@ export default {
     },
 
     weatherIcon() {
+      // const icon = (this.condition ?? '').toLowerCase()
       const icon = this.condition.toLowerCase()
 
       return WeatherApi.getIcon(icon)

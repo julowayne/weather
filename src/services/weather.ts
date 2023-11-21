@@ -21,6 +21,7 @@ export class WeatherApi {
       case 'clouds':
         return 'cloud'
 
+      case 'clear':  
       case 'sun':
         return 'sun'
 
