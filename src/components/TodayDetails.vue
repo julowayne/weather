@@ -4,17 +4,20 @@
       {{ getHours }}
     </div>
     <div>
-      {{ weatherToday.temperature }} °c <br />
-      {{ weatherToday.trend }}
+      {{ weatherToday.temperature }} °c
+    </div>
+    <div>
+      <font-awesome-icon :icon="['fas', weatherIcon]" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 
-import dayjs, { locale } from 'dayjs'
+import dayjs from 'dayjs'
 dayjs.locale('fr')
 
+import { WeatherApi } from '@/services/weather'
 import type { ThreeHoursWeather } from '@/views/Home.vue'
 import type { PropType } from 'vue'
 
@@ -31,6 +34,12 @@ export default {
   computed: {
     getHours() {
       return dayjs(this.weatherToday.dateTime).locale('fr').format('HH:mm')
+    },
+    weatherIcon() {
+      // const icon = (this.condition ?? '').toLowerCase()
+      const icon = this.weatherToday.trend .toLowerCase()
+
+      return WeatherApi.getIcon(icon)
     }
   }
 }
@@ -38,6 +47,9 @@ export default {
 
 <style scoped>
 .details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 10px;
 }
 </style>

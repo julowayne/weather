@@ -4,7 +4,7 @@
       <div>{{ getDay }} - {{ getHour }}</div>
       <div>
         {{ city }} {{ todayTemperature }} °c
-        <font-awesome-icon :icon="['fas', weatherIcon]" />
+        <font-awesome-icon :icon="['fas', weatherIcon]" class="icon" />
       </div>
     </div>
   </div>
@@ -72,6 +72,10 @@ export default {
   display: flex;
   justify-content: center;
   height: 80px;
+}
+
+.icon {
+  margin-left: 5px;
 }
 
 #today {
