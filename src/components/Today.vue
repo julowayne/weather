@@ -1,7 +1,7 @@
 <template>
   <div class="Today" @click="showDetails">
     <div id="today">
-      <div class="temperature">{{ todayTemperature }} °c</div>
+      <div class="temperature">{{ todayTemperature }}°c</div>
       <div>
         <font-awesome-icon class="fa-2xl" :icon="['fas', weatherIcon]" />
       </div>
@@ -79,7 +79,7 @@ export default {
 .temperature {
   font-weight: 700;
   font-size: xx-large;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 #today {

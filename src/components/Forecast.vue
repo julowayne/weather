@@ -1,6 +1,6 @@
 <template>
   <div id="forecast">
-    <h3 id="next-days">Next Days</h3>
+    <h3 id="next-days">Next days</h3>
     <ForecastDay v-for="(weather, index) in weathers" :key="index" :weather="weather" />
   </div>
 </template>

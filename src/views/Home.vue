@@ -167,6 +167,7 @@ export default {
 .location {
   margin-bottom: 4px;
 }
+
 .weather {
   width: 80vw;
   display: flex;

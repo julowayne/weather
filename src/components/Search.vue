@@ -64,7 +64,6 @@ export default {
         //   temperature: range.main.temp_max,
         //   trend: range.weather[0].main
         // }))
-
         // this.searchCity.name = weather.city.name
         // this.todayTemperature = Math.round(weather.list[0].main.temp)
         // this.hour = weather.list[0].dt_txt
@@ -118,5 +117,10 @@ input::placeholder {
   position: absolute;
   left: 10px;
   top: 17px;
+}
+
+.search-icon:hover {
+  transform: scale(1.2);
+  cursor: pointer;
 }
 </style>

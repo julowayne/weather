@@ -1,7 +1,7 @@
 <template>
   <div class="details">
     <div>{{ getHours }}h</div>
-    <div>{{ Today.temperature }} °c</div>
+    <div>{{ Today.temperature }}°c</div>
     <div>
       <font-awesome-icon :icon="['fas', weatherIcon]" />
     </div>
