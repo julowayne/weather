@@ -112,7 +112,6 @@ export default {
           }
         ]
       } else {
-        console.log(weather)
         const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
           dateTime: range.dt_txt,
           temperature: range.main.temp_max,
