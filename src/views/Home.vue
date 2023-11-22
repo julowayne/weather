@@ -50,7 +50,7 @@ export default {
   data: () => ({
     owApiKey: import.meta.env.VITE_OW_API_KEY,
     city: '',
-    hour: Date,
+    hour: '',
     condition: '',
     todayTemperature: null as number | null,
     latitude: null as number | null,

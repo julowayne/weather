@@ -32,7 +32,7 @@ export default {
   props: {
     city: String,
     hour: {
-      type: Date,
+      type: String,
       required: true
     },
     condition: {
