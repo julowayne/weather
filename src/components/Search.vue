@@ -19,7 +19,13 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios'
+import { WeatherApi } from '@/services/weather'
+
+export interface ThreeHoursWeather {
+  dateTime: Date
+  temperature: number
+  trend: string
+}
 
 export default {
   name: 'Search',
@@ -34,36 +40,37 @@ export default {
   }),
 
   methods: {
-    getWeatherByCity() {
-      axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${this.searchCity.name}&appid=${this.owApiKey}&units=metric`
-        )
-        .then((resp) => {
-          this.searchCity.name = resp.data.name
-          this.searchCity.temperature = Math.round(resp.data.main.temp)
-        })
-        .catch((error) => {
-          if (error.response) {
-            if (error.response.status === 400)
-              this.errorMsg = "The city you are looking for doesn't exist"
-          }
-        })
-    },
+    async getWeatherByCity() {
+      const weather = await WeatherApi.get('forecast', {
+        city: this.searchCity.name,
+        units: 'metric'
+      })
 
-    async getWeatherByCity2() {
-      try {
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${this.searchCity.name}&appid=${this.owApiKey}&units=metric`
-        )
+      if (weather === 400) {
+        // this.errors = [
+        //   {
+        //     message: 'Error 400: Bad request'
+        //   }
+        // ]
+      } else if (weather === 401) {
+        // this.errors = [
+        //   {
+        //     message: 'Error 401: Unauthorized request'
+        //   }
+        // ]
+      } else {
+        const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
+          dateTime: range.dt_txt,
+          temperature: range.main.temp_max,
+          trend: range.weather[0].main
+        }))
 
-        this.searchCity.name = response.data.name
-        this.searchCity.temperature = Math.round(response.data.main.temp)
-      } catch (error: any) {
-        if (error.response) {
-          if (error.response.status === 400)
-            this.errorMsg = "The city you are looking for doesn't exist"
-        }
+        this.searchCity.name = weather.city.name
+        // this.todayTemperature = Math.round(weather.list[0].main.temp)
+        // this.hour = weather.list[0].dt_txt
+        // this.condition = weather.list[0].weather[0].main
+        // this.weathers = this.getDaysData(fiveDaysForecast)
+        // this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
       }
     }
   },
