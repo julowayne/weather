@@ -2,7 +2,7 @@
   <div class="content-padding">
     <div class="weather">
       <div class="container">
-        <Search />
+        <Search :query="query" @keyup.enter="getWeatherByCity($event.target.value)" />
       </div>
       <h1 class="weather-title">
         <font-awesome-icon class="location" :icon="['fas', 'location-dot']" />
@@ -49,6 +49,7 @@ export default {
 
   data: () => ({
     owApiKey: import.meta.env.VITE_OW_API_KEY,
+    query: '',
     city: '',
     hour: '',
     condition: '',
@@ -89,6 +90,30 @@ export default {
       }
 
       navigator.geolocation.getCurrentPosition(success, error, options)
+    },
+
+    async getWeatherByCity(city: string) {
+
+      const weather = await WeatherApi.get('forecast', {
+        q: city,
+        appid: this.owApiKey,
+        units: 'metric'
+      })
+      
+      console.log(weather)
+
+      const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
+        dateTime: range.dt_txt,
+        temperature: range.main.temp_max,
+        trend: range.weather[0].main
+      }))
+
+      this.city = weather.city.name
+      this.todayTemperature = Math.round(weather.list[0].main.temp)
+      this.hour = weather.list[0].dt_txt
+      this.condition = weather.list[0].weather[0].main
+      this.weathers = this.getDaysData(fiveDaysForecast)
+      this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
     },
 
     async getWeatherData() {
