@@ -128,7 +128,7 @@ export default {
     },
 
     getTodayDetailsData(weatherListDetails: ThreeHoursWeather[]) {
-      const nextHours = weatherListDetails.slice(0, 9)
+      const nextHours = weatherListDetails.slice(0, 7)
 
       const dayDetails = nextHours.map((hour) => ({
         dateTime: hour.dateTime,
