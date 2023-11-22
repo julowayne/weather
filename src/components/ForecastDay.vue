@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts">
-import dayjs from 'dayjs'
 import { WeatherApi } from '@/services/weather'
+import { Dates } from '@/helpers/dates'
 import type { ThreeHoursWeather } from '@/views/Home.vue'
 import type { PropType } from 'vue'
 
@@ -31,11 +31,10 @@ export default {
   },
   computed: {
     day() {
-      return dayjs(this.weather.dateTime).format('dddd MMM')
+      return Dates.getDays(this.weather.dateTime)
     },
 
     weatherIcons() {
-      this.weather
       const icon = this.weather.trend.toLowerCase()
 
       return WeatherApi.getIcon(icon)
@@ -54,7 +53,7 @@ export default {
   margin-bottom: 10px;
   border-radius: 4px;
   background-color: #2c3e50;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  box-shadow: var(--box-shadow);
 }
 
 .day:hover {

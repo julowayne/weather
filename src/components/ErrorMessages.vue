@@ -8,13 +8,12 @@
 </template>
 
 <script lang="ts">
-
 import type { PropType } from 'vue'
 
 export default {
   name: 'ErrorMessages',
 
-  props :{
+  props: {
     errors: {
       type: Array as PropType<{ message: string }[]>,
       required: true
@@ -34,7 +33,7 @@ export default {
   border-radius: 4px;
   white-space: pre-wrap;
   background-color: #dc3545;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  box-shadow: var(--box-shadow);
   color: white;
   font-size: larger;
 }

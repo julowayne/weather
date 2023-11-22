@@ -1,6 +1,6 @@
-
 :root {
   --bg-black: #181818;
+  --box-shadow: var(--box-shadow);
 }
 
 :root {

@@ -33,7 +33,7 @@ export default {
   width: 350px;
   overflow-x: scroll;
   background-color: #2c3e50;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  box-shadow: var(--box-shadow);
   color: white;
   font-size: bold;
   margin-top: 10px;

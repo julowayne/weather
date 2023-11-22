@@ -1,11 +1,16 @@
 <template>
   <div class="content-padding">
     <div class="weather">
-      <h1 class="weather-title">Weather</h1>
+      <div class="container">
+        <Search />
+      </div>
+      <h1 class="weather-title">
+        <font-awesome-icon class="location" :icon="['fas', 'location-dot']" />
+        {{ city }}
+      </h1>
       <div v-if="todayTemperature && !errors.length" class="container">
         <WeatherToday
           :todayTemperature="todayTemperature"
-          :city="city"
           :hour="hour"
           :condition="condition"
           :weatherTodayDetails="weatherTodayDetails"
@@ -24,6 +29,7 @@ import { WeatherApi } from '@/services/weather'
 import WeatherToday from '@/components/Today.vue'
 import WeatherForecast from '@/components/Forecast.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
+import Search from '@/components/Search.vue'
 
 export interface ThreeHoursWeather {
   dateTime: Date
@@ -37,13 +43,14 @@ export default {
   components: {
     WeatherToday,
     WeatherForecast,
-    ErrorMessages
+    ErrorMessages,
+    Search
   },
 
   data: () => ({
     owApiKey: import.meta.env.VITE_OW_API_KEY,
     city: '',
-    hour: '',
+    hour: Date,
     condition: '',
     todayTemperature: null as number | null,
     latitude: null as number | null,
@@ -156,6 +163,10 @@ export default {
 .weather-title {
   color: #e9ecef;
   padding: 10px;
+}
+
+.location {
+  margin-bottom: 4px;
 }
 .weather {
   width: 80vw;

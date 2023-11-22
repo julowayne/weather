@@ -1,11 +1,7 @@
 <template>
   <div class="details">
-    <div>
-      {{ getHours }}
-    </div>
-    <div>
-      {{ weatherToday.temperature }} °c
-    </div>
+    <div>{{ getHours }}h</div>
+    <div>{{ weatherToday.temperature }} °c</div>
     <div>
       <font-awesome-icon :icon="['fas', weatherIcon]" />
     </div>
@@ -13,7 +9,6 @@
 </template>
 
 <script lang="ts">
-
 import dayjs from 'dayjs'
 dayjs.locale('fr')
 
@@ -33,11 +28,10 @@ export default {
 
   computed: {
     getHours() {
-      return dayjs(this.weatherToday.dateTime).locale('fr').format('HH:mm')
+      return dayjs(this.weatherToday.dateTime).locale('fr').format('HH')
     },
     weatherIcon() {
-      // const icon = (this.condition ?? '').toLowerCase()
-      const icon = this.weatherToday.trend .toLowerCase()
+      const icon = this.weatherToday.trend.toLowerCase()
 
       return WeatherApi.getIcon(icon)
     }
