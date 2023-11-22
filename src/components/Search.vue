@@ -59,13 +59,13 @@ export default {
         //   }
         // ]
       } else {
-        const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
-          dateTime: range.dt_txt,
-          temperature: range.main.temp_max,
-          trend: range.weather[0].main
-        }))
+        // const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
+        //   dateTime: range.dt_txt,
+        //   temperature: range.main.temp_max,
+        //   trend: range.weather[0].main
+        // }))
 
-        this.searchCity.name = weather.city.name
+        // this.searchCity.name = weather.city.name
         // this.todayTemperature = Math.round(weather.list[0].main.temp)
         // this.hour = weather.list[0].dt_txt
         // this.condition = weather.list[0].weather[0].main
