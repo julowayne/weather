@@ -22,7 +22,7 @@
 import axios from 'axios'
 
 export default {
-  name: 'WeatherSearch',
+  name: 'Search',
 
   data: () => ({
     owApiKey: import.meta.env.VITE_OW_API_KEY,

@@ -1,12 +1,12 @@
 <template>
   <div id="forecast">
     <h3 id="next-days">Next Days</h3>
-    <WeatherForecastDay v-for="(weather, index) in weathers" :key="index" :weather="weather" />
+    <ForecastDay v-for="(weather, index) in weathers" :key="index" :weather="weather" />
   </div>
 </template>
 
 <script lang="ts">
-import WeatherForecastDay from '@/components/ForecastDay.vue'
+import ForecastDay from '@/components/ForecastDay.vue'
 import type { ThreeHoursWeather } from '@/views/Home.vue'
 import type { PropType } from 'vue'
 
@@ -14,7 +14,7 @@ export default {
   name: 'Forecast',
 
   components: {
-    WeatherForecastDay
+    ForecastDay
   },
 
   props: {

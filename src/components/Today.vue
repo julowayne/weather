@@ -1,5 +1,5 @@
 <template>
-  <div class="weatherToday" @click="showDetails">
+  <div class="Today" @click="showDetails">
     <div id="today">
       <div class="temperature">{{ todayTemperature }} °c</div>
       <div>
@@ -8,12 +8,12 @@
     </div>
   </div>
   <div v-if="showWeatherDetails === true">
-    <WeatherDayDetails :weatherTodayDetails="weatherTodayDetails" />
+    <DayDetails :TodayDetails="TodayDetails" />
   </div>
 </template>
 
 <script lang="ts">
-import WeatherDayDetails from '@/components/DayDetails.vue'
+import DayDetails from '@/components/DayDetails.vue'
 import { WeatherApi } from '@/services/weather'
 
 import { Dates } from '@/helpers/dates'
@@ -22,8 +22,8 @@ import type { ThreeHoursWeather } from '@/views/Home.vue'
 import type { PropType } from 'vue'
 
 export default {
-  name: 'WeatherToday',
-  components: { WeatherDayDetails },
+  name: 'Today',
+  components: { DayDetails },
 
   data: () => ({
     showWeatherDetails: false
@@ -40,7 +40,7 @@ export default {
       required: true
     },
     todayTemperature: Number,
-    weatherTodayDetails: {
+    TodayDetails: {
       type: Array as PropType<ThreeHoursWeather[]>
     }
   },
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style scoped>
-.weatherToday {
+.Today {
   display: flex;
   justify-content: center;
   height: 80px;

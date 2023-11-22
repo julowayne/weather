@@ -1,26 +1,22 @@
 <template>
   <div class="day-details">
-    <WeatherTodayDetails
-      v-for="(weatherToday, index) in weatherTodayDetails"
-      :key="index"
-      :weatherToday="weatherToday"
-    />
+    <TodayDetails v-for="(Today, index) in TodayDetails" :key="index" :Today="Today" />
   </div>
 </template>
 
 <script lang="ts">
-import WeatherTodayDetails from '@/components/TodayDetails.vue'
+import TodayDetails from '@/components/TodayDetails.vue'
 import type { ThreeHoursWeather } from '@/views/Home.vue'
 import type { PropType } from 'vue'
 
 export default {
   name: 'DayDetails',
   props: {
-    weatherTodayDetails: {
+    TodayDetails: {
       type: Array as PropType<ThreeHoursWeather[]>
     }
   },
-  components: { WeatherTodayDetails }
+  components: { TodayDetails }
 }
 </script>
 

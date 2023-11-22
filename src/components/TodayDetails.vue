@@ -1,7 +1,7 @@
 <template>
   <div class="details">
     <div>{{ getHours }}h</div>
-    <div>{{ weatherToday.temperature }} °c</div>
+    <div>{{ Today.temperature }} °c</div>
     <div>
       <font-awesome-icon :icon="['fas', weatherIcon]" />
     </div>
@@ -20,7 +20,7 @@ export default {
   name: 'TodayDetails',
 
   props: {
-    weatherToday: {
+    Today: {
       type: Object as PropType<ThreeHoursWeather>,
       required: true
     }
@@ -28,10 +28,10 @@ export default {
 
   computed: {
     getHours() {
-      return dayjs(this.weatherToday.dateTime).locale('fr').format('HH')
+      return dayjs(this.Today.dateTime).locale('fr').format('HH')
     },
     weatherIcon() {
-      const icon = this.weatherToday.trend.toLowerCase()
+      const icon = this.Today.trend.toLowerCase()
 
       return WeatherApi.getIcon(icon)
     }

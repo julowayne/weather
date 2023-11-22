@@ -9,11 +9,11 @@
         {{ city }}
       </h1>
       <div v-if="todayTemperature && !errors.length" class="container">
-        <WeatherToday
+        <Today
           :todayTemperature="todayTemperature"
           :hour="hour"
           :condition="condition"
-          :weatherTodayDetails="weatherTodayDetails"
+          :TodayDetails="TodayDetails"
         />
         <WeatherForecast :weathers="weathers" />
       </div>
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { WeatherApi } from '@/services/weather'
-import WeatherToday from '@/components/Today.vue'
+import Today from '@/components/Today.vue'
 import WeatherForecast from '@/components/Forecast.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 import Search from '@/components/Search.vue'
@@ -41,7 +41,7 @@ export default {
   name: 'Home',
 
   components: {
-    WeatherToday,
+    Today,
     WeatherForecast,
     ErrorMessages,
     Search
@@ -56,7 +56,7 @@ export default {
     latitude: null as number | null,
     longitude: null as number | null,
     weathers: [] as ThreeHoursWeather[],
-    weatherTodayDetails: [] as ThreeHoursWeather[],
+    TodayDetails: [] as ThreeHoursWeather[],
     weatherBackground: '',
     geolocationDenied: '',
     errors: [] as { message: string }[]
@@ -124,7 +124,7 @@ export default {
         this.hour = weather.list[0].dt_txt
         this.condition = weather.list[0].weather[0].main
         this.weathers = this.getDaysData(fiveDaysForecast)
-        this.weatherTodayDetails = this.getTodayDetailsData(fiveDaysForecast)
+        this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
       }
     },
 
