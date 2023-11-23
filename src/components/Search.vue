@@ -4,17 +4,12 @@
       <input
         :value="query"
         type="text"
-        @keyup.enter="$emit('update:query', $event.target.value)"
+        @keyup.enter="getInput($event)"
         placeholder="Search other cities"
+        required
       />
       <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="search-icon fa-lg" />
     </div>
-    <!-- <div v-if="searchCity.temperature !== null">
-      The temperature in {{ searchCity.name }} is {{ searchCity.temperature }} °c
-    </div>
-    <div v-else>
-      {{ errorMsg }}
-    </div> -->
   </div>
 </template>
 
@@ -31,7 +26,7 @@ export default {
   name: 'Search',
 
   emits: ['update:query'],
-  
+
   data: () => ({
     owApiKey: import.meta.env.VITE_OW_API_KEY,
     errorMsg: ''
@@ -39,8 +34,14 @@ export default {
 
   props: {
     query: String as PropType<string>
+  },
+  methods: {
+    getInput(event: any) {
+      if (event && event.target) {
+        this.$emit('update:query', event.target.value)
+      }
+    }
   }
-
 }
 </script>
 
@@ -84,5 +85,6 @@ input::placeholder {
 .search-icon:hover {
   transform: scale(1.2);
   cursor: pointer;
+  margin-bottom: 4px;
 }
 </style>

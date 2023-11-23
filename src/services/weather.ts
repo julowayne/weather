@@ -11,7 +11,7 @@ export class WeatherApi {
       return response.data
     } catch (error: any) {
       if (error.response) {
-        return error.response
+        return error.response.status
       }
     }
   }

@@ -1,6 +1,13 @@
 <template>
   <div class="content-padding">
-    <div class="weather">
+    <div v-if="isLoading">
+      <font-awesome-icon class="fa-5x loader" :icon="['fas', 'circle-notch']" spin />
+    </div>
+    <div v-if="!isLoading" class="weather">
+      <div class="geolocation" @click="getUserPosition">
+        <font-awesome-icon class="fa-2xl fa-flip map" :icon="['fas', 'globe']" />
+        <span>Geolocate me</span>
+      </div>
       <div class="container">
         <Search :query="query" @keyup.enter="getWeatherByCity($event.target.value)" />
       </div>
@@ -8,19 +15,24 @@
         <font-awesome-icon class="location" :icon="['fas', 'location-dot']" />
         {{ city }}
       </h1>
-      <div v-if="todayTemperature && !errors.length" class="container">
-        <Today
-          :todayTemperature="todayTemperature"
-          :hour="hour"
-          :condition="condition"
-          :TodayDetails="TodayDetails"
-        />
-        <WeatherForecast :weathers="weathers" />
+      <div v-if="isRequestLoading" class="loader-height">
+        <font-awesome-icon class="fa-3x loader" :icon="['fas', 'circle-notch']" spin />
+      </div>
+      <div v-if="!isRequestLoading">
+        <div v-if="todayTemperature && !errors.length" class="container">
+          <Today
+            :todayTemperature="todayTemperature"
+            :hour="hour"
+            :condition="condition"
+            :TodayDetails="TodayDetails"
+          />
+          <WeatherForecast :weathers="weathers" />
+        </div>
       </div>
     </div>
-    <div v-if="errors.length">
+  </div>
+  <div class="container" v-if="errors.length">
       <ErrorMessages :errors="errors" />
-    </div>
   </div>
 </template>
 
@@ -60,11 +72,20 @@ export default {
     TodayDetails: [] as ThreeHoursWeather[],
     weatherBackground: '',
     geolocationDenied: '',
-    errors: [] as { message: string }[]
+    errors: [] as { message: string }[],
+    isLoading: true,
+    isRequestLoading: false
   }),
 
   methods: {
     getUserPosition() {
+
+      if (this.errors.length) {
+        this.errors = []
+      }
+
+      this.loader()
+
       const options = {
         enableHighAccuracy: true,
         timeout: 5000,
@@ -94,26 +115,52 @@ export default {
 
     async getWeatherByCity(city: string) {
 
+      this.isRequestLoading = true
+      await this.requestLoader()
+
       const weather = await WeatherApi.get('forecast', {
         q: city,
         appid: this.owApiKey,
         units: 'metric'
       })
-      
-      console.log(weather)
 
-      const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
-        dateTime: range.dt_txt,
-        temperature: range.main.temp_max,
-        trend: range.weather[0].main
-      }))
+      if (this.errors.length) {
+        this.errors = []
+      }
 
-      this.city = weather.city.name
-      this.todayTemperature = Math.round(weather.list[0].main.temp)
-      this.hour = weather.list[0].dt_txt
-      this.condition = weather.list[0].weather[0].main
-      this.weathers = this.getDaysData(fiveDaysForecast)
-      this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
+      if (weather === 400) {
+        this.errors = [
+          {
+            message: 'Error 400: Bad request'
+          }
+        ]
+      } else if (weather === 401) {
+        this.errors = [
+          {
+            message: 'Error 401: Unauthorized request'
+          }
+        ]
+      } else if (weather === 404) {
+        this.errors = [
+          {
+            message: `The city '${city}' you are looking for doesn't exist`
+          }
+        ]
+      } else {
+        
+        const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
+          dateTime: range.dt_txt,
+          temperature: range.main.temp_max,
+          trend: range.weather[0].main
+        }))
+
+        this.city = weather.city.name
+        this.todayTemperature = Math.round(weather.list[0].main.temp)
+        this.hour = weather.list[0].dt_txt
+        this.condition = weather.list[0].weather[0].main
+        this.weathers = this.getDaysData(fiveDaysForecast)
+        this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
+      }
     },
 
     async getWeatherData() {
@@ -174,6 +221,19 @@ export default {
       }))
 
       return data
+    },
+
+    loader() {
+      setTimeout(() => {
+        this.isLoading = false
+      }, 2000)
+    },
+
+    async requestLoader(): Promise<void> {
+
+      await new Promise(resolve => setTimeout(resolve, 5000));
+
+      this.isRequestLoading = false
     }
   },
 
@@ -184,6 +244,9 @@ export default {
 </script>
 
 <style scoped>
+.map {
+  --fa-animation-duration: 3s;
+}
 .weather-title {
   color: #e9ecef;
   padding: 10px;
@@ -207,5 +270,24 @@ export default {
   justify-content: center;
   align-items: center;
   min-width: 350px;
+}
+
+.geolocation {
+  padding: 15px;
+  cursor: pointer;
+  color: white;
+  position: sticky;
+}
+
+.geolocation > span {
+  margin-left: 10px;
+  font-weight: 700;
+}
+
+.loader-height {
+  margin-bottom: 20px;
+}
+.loader {
+  color: white;
 }
 </style>
