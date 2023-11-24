@@ -51,12 +51,11 @@ export default {
 }
 
 input {
-  display: inline-block;
   width: 100%;
   height: 50px;
   border-radius: 6px;
   margin-bottom: 15px;
-  font-size: larger;
+  font-size: var(--font-larger);
   font-weight: 500;
   padding: 0 35px;
   box-shadow: var(--box-shadow);
@@ -79,7 +78,7 @@ input::placeholder {
 .search-icon {
   position: absolute;
   left: 10px;
-  top: 17px;
+  top: 15px;
 }
 
 .search-icon:hover {

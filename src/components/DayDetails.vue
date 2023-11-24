@@ -26,16 +26,12 @@ export default {
   flex-direction: row;
   padding: 10px;
   border-radius: 4px;
-  width: 350px;
-  overflow-x: scroll;
-  background-color: #2c3e50;
+  width: var(--min-width);
+  background-color: var(--element-bg-color);
   box-shadow: var(--box-shadow);
-  color: white;
+  color: var(--white);
   font-size: bold;
   margin-top: 10px;
 }
 
-.day-details::-webkit-scrollbar {
-  display: none;
-}
 </style>

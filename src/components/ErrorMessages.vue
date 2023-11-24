@@ -24,7 +24,7 @@ export default {
 
 <style scoped>
 .error {
-  min-width: 350px;
+  min-width: var(--min-width);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,10 +32,10 @@ export default {
   margin-bottom: 10px;
   border-radius: 4px;
   white-space: pre-wrap;
-  background-color: #dc3545;
+  background-color: var(--danger);
   box-shadow: var(--box-shadow);
-  color: white;
-  font-size: larger;
+  color: var(--white);
+  font-size: var(--font-larger);
 }
 #icon {
   /* margin-top: 2px; */

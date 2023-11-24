@@ -86,12 +86,12 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  min-width: 350px;
+  min-width: var(--min-width);
   padding: 10px;
   border-radius: 4px;
-  background-color: #2c3e50;
+  background-color: var(--element-bg-color);
   box-shadow: var(--box-shadow);
-  color: white;
+  color: var(--white);
   font-size: bold;
   cursor: pointer;
 }

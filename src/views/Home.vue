@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class="container" v-if="errors.length">
-      <ErrorMessages :errors="errors" />
+    <ErrorMessages :errors="errors" />
   </div>
 </template>
 
@@ -79,7 +79,6 @@ export default {
 
   methods: {
     getUserPosition() {
-
       if (this.errors.length) {
         this.errors = []
       }
@@ -114,7 +113,6 @@ export default {
     },
 
     async getWeatherByCity(city: string) {
-
       this.isRequestLoading = true
       await this.requestLoader()
 
@@ -147,7 +145,6 @@ export default {
           }
         ]
       } else {
-        
         const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
           dateTime: range.dt_txt,
           temperature: range.main.temp_max,
@@ -230,8 +227,7 @@ export default {
     },
 
     async requestLoader(): Promise<void> {
-
-      await new Promise(resolve => setTimeout(resolve, 5000));
+      await new Promise((resolve) => setTimeout(resolve, 5000))
 
       this.isRequestLoading = false
     }
@@ -269,13 +265,13 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 350px;
+  min-width: var(--min-width);
 }
 
 .geolocation {
   padding: 15px;
   cursor: pointer;
-  color: white;
+  color: var(--white);
   position: sticky;
 }
 
@@ -288,6 +284,6 @@ export default {
   margin-bottom: 20px;
 }
 .loader {
-  color: white;
+  color: var(--white);
 }
 </style>
