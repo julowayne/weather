@@ -2,19 +2,19 @@
   <div class="search-container">
     <div class="search">
       <input
-        :value="query"
+        v-model="inputValue"
         type="text"
         @keyup.enter="getInput($event)"
         placeholder="Search other cities"
         required
       />
       <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="search-icon fa-lg" />
+      <font-awesome-icon @click="clearInput" :icon="['fas', 'circle-xmark']" class="clear-input fa-lg" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import type { PropType } from 'vue'
 
 export interface ThreeHoursWeather {
   dateTime: Date
@@ -29,18 +29,26 @@ export default {
 
   data: () => ({
     owApiKey: import.meta.env.VITE_OW_API_KEY,
-    errorMsg: ''
+    errorMsg: '',
+    inputValue: ''
   }),
 
-  props: {
-    query: String as PropType<string>
-  },
   methods: {
+
     getInput(event: any) {
       if (event && event.target) {
-        this.$emit('update:query', event.target.value)
+
+        this.inputValue = event.target.value;
+        this.$emit('update:query', this.inputValue)
+        
       }
+    },
+
+    clearInput(){
+      this.inputValue = ''
+      this.$emit('update:query', '');
     }
+
   }
 }
 </script>
@@ -85,5 +93,12 @@ input::placeholder {
   transform: scale(1.2);
   cursor: pointer;
   margin-bottom: 4px;
+}
+
+.clear-input {
+  position: absolute;
+  cursor: pointer;
+  right: 10px;
+  top: 17px;
 }
 </style>

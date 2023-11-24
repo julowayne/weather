@@ -9,7 +9,7 @@
         <span>Geolocate me</span>
       </div>
       <div class="container">
-        <Search :query="query" @keyup.enter="getWeatherByCity($event.target.value)" />
+        <Search @keyup.enter="getWeatherByCity($event.target.value)" />
       </div>
       <h1 class="weather-title">
         <font-awesome-icon class="location" :icon="['fas', 'location-dot']" />
@@ -61,7 +61,6 @@ export default {
 
   data: () => ({
     owApiKey: import.meta.env.VITE_OW_API_KEY,
-    query: '',
     city: '',
     hour: '',
     condition: '',
