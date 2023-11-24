@@ -44,7 +44,7 @@ import ErrorMessages from '@/components/ErrorMessages.vue'
 import Search from '@/components/Search.vue'
 
 export interface ThreeHoursWeather {
-  dateTime: Date
+  dateTime: string
   temperature: number
   trend: string
 }
