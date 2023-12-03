@@ -14,7 +14,7 @@ module.exports = {
   },
   "rules": {
     "vue/multi-word-component-names": ["error", {
-      "ignores": ["Search", "Home"] 
+      "ignores": ["Search", "Home", "Forecast", "Toasters", "Today", "Toaster"] 
     }],
   }
 }
