@@ -19,14 +19,14 @@
         <font-awesome-icon class="fa-3x loader" :icon="['fas', 'circle-notch']" spin />
       </div>
       <div v-if="!isRequestLoading">
-        <div v-if="todayTemperature && !errors.length" class="container">
+        <div v-if="todayTemperature !== null && todayTemperature !== undefined && !errors.length" class="container">
           <Today
             :todayTemperature="todayTemperature"
             :hour="hour"
             :condition="condition"
             :TodayDetails="TodayDetails"
           />
-          <WeatherForecast :weathers="weathers" />
+          <Forecast :weathers="weathers" />
         </div>
       </div>
     </div>
@@ -38,10 +38,13 @@
 
 <script lang="ts">
 import { WeatherApi } from '@/services/weather'
+import { mapStores } from 'pinia'
+import { useToastersStore } from '@/stores/toaster'
 import Today from '@/components/Today.vue'
-import WeatherForecast from '@/components/Forecast.vue'
+import Forecast from '@/components/Forecast.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 import Search from '@/components/Search.vue'
+
 
 export interface ThreeHoursWeather {
   dateTime: string
@@ -49,14 +52,15 @@ export interface ThreeHoursWeather {
   trend: string
 }
 
+
 export default {
   name: 'Home',
 
   components: {
     Today,
-    WeatherForecast,
+    Forecast,
     ErrorMessages,
-    Search
+    Search,
   },
 
   data: () => ({
@@ -73,11 +77,18 @@ export default {
     geolocationDenied: '',
     errors: [] as { message: string }[],
     isLoading: true,
-    isRequestLoading: false
+    isRequestLoading: false  
   }),
 
+  computed: {
+    ...mapStores(useToastersStore),
+  },
+
   methods: {
+
+
     getUserPosition() {
+      console.log('position')
       if (this.errors.length) {
         this.errors = []
       }
@@ -157,9 +168,14 @@ export default {
         this.weathers = this.getDaysData(fiveDaysForecast)
         this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
       }
+
+      this.toastersStore.create({ message: `You were looking for ${city}`, name: "Jules"})
+
     },
 
     async getWeatherData() {
+      console.log('getweather')
+      
       const weather = await WeatherApi.get('forecast', {
         lat: this.latitude,
         lon: this.longitude,
@@ -180,6 +196,7 @@ export default {
           }
         ]
       } else {
+        console.log('200')
         const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
           dateTime: range.dt_txt,
           temperature: range.main.temp_max,
@@ -192,6 +209,9 @@ export default {
         this.condition = weather.list[0].weather[0].main
         this.weathers = this.getDaysData(fiveDaysForecast)
         this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
+
+        
+        console.log('city : ' + this.city + ' - ' + this.todayTemperature + ' - ' + this.hour)
       }
     },
 
@@ -231,7 +251,6 @@ export default {
       this.isRequestLoading = false
     }
   },
-
   created() {
     this.getUserPosition()
   }
