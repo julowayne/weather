@@ -20,12 +20,7 @@
       </div>
       <div v-if="!isRequestLoading">
         <div v-if="todayTemperature !== null && todayTemperature !== undefined && !errors.length" class="container">
-          <Today
-            :todayTemperature="todayTemperature"
-            :hour="hour"
-            :condition="condition"
-            :TodayDetails="TodayDetails"
-          />
+          <Today :todayTemperature="todayTemperature" :hour="hour" :condition="condition" :TodayDetails="TodayDetails" />
           <Forecast :weathers="weathers" />
         </div>
       </div>
@@ -77,7 +72,7 @@ export default {
     geolocationDenied: '',
     errors: [] as { message: string }[],
     isLoading: true,
-    isRequestLoading: false  
+    isRequestLoading: false
   }),
 
   computed: {
@@ -88,7 +83,6 @@ export default {
 
 
     getUserPosition() {
-      console.log('position')
       if (this.errors.length) {
         this.errors = []
       }
@@ -169,13 +163,12 @@ export default {
         this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
       }
 
-      this.toastersStore.create({ message: `You were looking for ${city}`, name: "Jules"})
+      this.toastersStore.create({ message: `You were looking for ${city}`, name: "Jules" })
 
     },
 
     async getWeatherData() {
-      console.log('getweather')
-      
+
       const weather = await WeatherApi.get('forecast', {
         lat: this.latitude,
         lon: this.longitude,
@@ -196,7 +189,7 @@ export default {
           }
         ]
       } else {
-        console.log('200')
+
         const fiveDaysForecast: ThreeHoursWeather[] = weather.list.map((range: any) => ({
           dateTime: range.dt_txt,
           temperature: range.main.temp_max,
@@ -210,8 +203,6 @@ export default {
         this.weathers = this.getDaysData(fiveDaysForecast)
         this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
 
-        
-        console.log('city : ' + this.city + ' - ' + this.todayTemperature + ' - ' + this.hour)
       }
     },
 
@@ -261,6 +252,7 @@ export default {
 .map {
   --fa-animation-duration: 3s;
 }
+
 .weather-title {
   color: #e9ecef;
   padding: 10px;
@@ -278,6 +270,7 @@ export default {
   align-items: center;
   align-content: center;
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -293,7 +286,7 @@ export default {
   position: sticky;
 }
 
-.geolocation > span {
+.geolocation>span {
   margin-left: 10px;
   font-weight: 700;
 }
@@ -301,7 +294,26 @@ export default {
 .loader-height {
   margin-bottom: 20px;
 }
+
 .loader {
   color: var(--white);
+}
+
+/* Responsive */
+
+@media (min-width: 1024px) {}
+
+@media (max-width: 992px) and (max-width: 1024px)  {}
+
+@media (min-width: 768px) and (max-width: 992px)  {
+  .weather-title {
+    font-size: x-large;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .weather-title {
+    font-size: larger;
+  }
 }
 </style>

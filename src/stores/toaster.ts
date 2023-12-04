@@ -22,11 +22,7 @@ export const useToastersStore = defineStore('toasters', {
 
     create(toaster: Toaster): Toaster {
 
-      const toastsCount = this.toasters.push(toaster)
-
-      setTimeout(() => {
-        this.close(toastsCount -1)
-      }, 2500)
+      this.toasters.push(toaster)
 
       return toaster
     },
