@@ -1,10 +1,12 @@
 <script lang="ts">
 import { RouterView } from 'vue-router'
 import Toasters from './components/Toaster.vue';
+import DarkMode from './components/DarkMode.vue';
 
 export default {
   components: {
-    Toasters
+    Toasters,
+    DarkMode
   }
 }
 
@@ -14,7 +16,8 @@ export default {
   <header>
     <div class="wrapper">
       <RouterView />
-      <Toasters/>
+      <DarkMode />
+      <Toasters />
     </div>
   </header>
 </template>
