@@ -1,17 +1,28 @@
 <template>
   <div id="forecast">
-    <h3 id="next-days">Next days</h3>
+    <h3 id="next-days" :class="darkModeClass">Next days</h3>
     <ForecastDay v-for="(weather, index) in weathers" :key="index" :weather="weather" />
   </div>
 </template>
 
 <script lang="ts">
 import ForecastDay from '@/components/ForecastDay.vue'
+import { useDark } from '@vueuse/core'
+import { dark } from '@/helpers/dark-toggle'
 import type { ThreeHoursWeather } from '@/views/Home.vue'
 import type { PropType } from 'vue'
 
 export default {
   name: 'Forecast',
+
+  data: () => ({
+    isDark: useDark({
+      selector: 'html',
+      attribute: 'class',
+      valueDark: 'dark',
+      valueLight: 'light',
+    }),
+  }),
 
   components: {
     ForecastDay
@@ -21,6 +32,12 @@ export default {
     weathers: {
       type: Array as PropType<ThreeHoursWeather[]>
     }
+  },
+
+  computed: {
+    darkModeClass() {
+      return dark(this.isDark);
+    },
   }
 }
 </script>
@@ -37,5 +54,6 @@ export default {
 
 #next-days {
   margin-bottom: 15px;
+  font-size: x-large;
 }
 </style>

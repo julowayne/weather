@@ -5,5 +5,4 @@ export const isDark = useDark({
   attribute: 'class',
   valueDark: 'dark',
   valueLight: 'light',
-
 })

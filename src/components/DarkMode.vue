@@ -19,7 +19,7 @@ const toggleDark = useToggle(isDark)
 .dark-mode-toggle {
     position: absolute;
     top: 18%;
-    right: 39%;
+    right: 42%;
     transform: translateX(50%);
 }
 
@@ -36,7 +36,7 @@ const toggleDark = useToggle(isDark)
 }
 
 .light-icon {
-    color: var(--light-icon);
+    color: var(--element-bg-color);
 }
 
 

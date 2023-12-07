@@ -5,18 +5,18 @@
     </div>
     <div v-if="!isLoading" class="weather">
       <div class="geolocation" @click="getUserPosition">
-        <font-awesome-icon class="fa-2xl fa-flip map" :icon="['fas', 'globe']" />
-        <span>Geolocate me</span>
+        <font-awesome-icon :class="darkModeClass" class="fa-2xl fa-flip map" :icon="['fas', 'globe']" />
+        <span :class="darkModeClass">Geolocate me</span>
       </div>
       <div class="container">
         <Search @keyup.enter="getWeatherByCity($event.target.value)" />
       </div>
       <h1 class="weather-title">
-        <font-awesome-icon class="location" :icon="['fas', 'location-dot']" />
-        {{ city }}
+        <font-awesome-icon class="location" :class="darkModeClass" :icon="['fas', 'location-dot']" />
+        <span :class="darkModeClass">{{ city }}</span>
       </h1>
       <div v-if="isRequestLoading" class="loader-height">
-        <font-awesome-icon class="fa-3x loader" :icon="['fas', 'circle-notch']" spin />
+        <font-awesome-icon class="fa-3x loader" :class="darkModeClass" :icon="['fas', 'circle-notch']" spin />
       </div>
       <div v-if="!isRequestLoading">
         <div v-if="todayTemperature !== null && todayTemperature !== undefined && !errors.length" class="container">
@@ -32,13 +32,16 @@
 </template>
 
 <script lang="ts">
+import { dark } from '@/helpers/dark-toggle'
 import { WeatherApi } from '@/services/weather'
 import { mapStores } from 'pinia'
 import { useToastersStore } from '@/stores/toaster'
+import { useDark } from '@vueuse/core'
 import Today from '@/components/Today.vue'
 import Forecast from '@/components/Forecast.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 import Search from '@/components/Search.vue'
+
 
 
 export interface ThreeHoursWeather {
@@ -72,11 +75,21 @@ export default {
     geolocationDenied: '',
     errors: [] as { message: string }[],
     isLoading: true,
-    isRequestLoading: false
+    isRequestLoading: false,
+    isDark: useDark({
+      selector: 'html',
+      attribute: 'class',
+      valueDark: 'dark',
+      valueLight: 'light',
+    }),
   }),
 
   computed: {
     ...mapStores(useToastersStore),
+
+    darkModeClass() {
+      return dark(this.isDark);
+    },
   },
 
   methods: {
@@ -259,6 +272,7 @@ export default {
 
 .location {
   margin-bottom: 4px;
+  margin-right: 4px;
 }
 
 .weather {
@@ -282,7 +296,6 @@ export default {
   padding: 15px;
   cursor: pointer;
   color: var(--white);
-  position: sticky;
   margin-right: 200px;
 }
 
