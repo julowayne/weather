@@ -1,20 +1,16 @@
 <template>
   <div class="search-container">
     <div class="search">
-      <input
-        v-model="inputValue"
-        type="text"
-        @keyup.enter="getInput($event)"
-        placeholder="Search other cities"
-        required
-      />
-      <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="search-icon fa-lg" />
-      <font-awesome-icon @click="clearInput" :icon="['fas', 'circle-xmark']" class="clear-input fa-lg" />
+      <input v-model="inputValue" type="text" @keyup.enter="getInput($event)" placeholder="Search other cities"
+        required />
+      <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="search-icon fa-lg light-icon" />
+      <font-awesome-icon @click="clearInput" :icon="['fas', 'circle-xmark']" class="clear-input fa-lg light-icon" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
+
 
 export interface ThreeHoursWeather {
   dateTime: Date
@@ -40,16 +36,16 @@ export default {
 
         this.inputValue = event.target.value;
         this.$emit('update:query', this.inputValue)
-        
+
       }
     },
 
-    clearInput(){
+    clearInput() {
       this.inputValue = ''
       this.$emit('update:query', '');
     }
 
-  }
+  },
 }
 </script>
 
@@ -83,6 +79,7 @@ input::placeholder {
 .search {
   position: relative;
 }
+
 .search-icon {
   position: absolute;
   left: 10px;
@@ -99,6 +96,6 @@ input::placeholder {
   position: absolute;
   cursor: pointer;
   right: 10px;
-  top: 17px;
+  top: 16px;
 }
 </style>

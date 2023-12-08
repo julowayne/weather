@@ -1,5 +1,5 @@
 <template>
-  <div class="Today" @click="showDetails">
+  <div class="today" @click="showDetails">
     <div id="today">
       <div class="temperature">{{ todayTemperature }}°c</div>
       <div>
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style scoped>
-.Today {
+.today {
   display: flex;
   justify-content: center;
   height: 80px;
@@ -86,7 +86,7 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  min-width: var(--min-width);
+  width: var(--min-width);
   padding: 10px;
   border-radius: 4px;
   background-color: var(--element-bg-color);

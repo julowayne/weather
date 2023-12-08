@@ -1,12 +1,17 @@
 <template>
-  <div class="content-padding">
-    <div v-if="isLoading">
-      <font-awesome-icon class="fa-5x loader" :icon="['fas', 'circle-notch']" spin />
+  <div>
+    <div v-if="isLoading" class="weather">
+      <font-awesome-icon class="fa-5x loader" :class="darkModeClass" :icon="['fas', 'circle-notch']" spin />
     </div>
     <div v-if="!isLoading" class="weather">
       <div class="geolocation" @click="getUserPosition">
-        <font-awesome-icon :class="darkModeClass" class="fa-2xl fa-flip map" :icon="['fas', 'globe']" />
-        <span :class="darkModeClass">Geolocate me</span>
+        <div>
+          <font-awesome-icon :class="darkModeClass" class="fa-2xl fa-flip map" :icon="['fas', 'globe']" />
+          <span :class="darkModeClass">Geolocate me</span>
+        </div>
+        <div>
+          <DarkMode />
+        </div>
       </div>
       <div class="container">
         <Search @keyup.enter="getWeatherByCity($event.target.value)" />
@@ -41,6 +46,7 @@ import Today from '@/components/Today.vue'
 import Forecast from '@/components/Forecast.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 import Search from '@/components/Search.vue'
+import DarkMode from '@/components/DarkMode.vue';
 
 
 
@@ -58,7 +64,8 @@ export default {
     Today,
     Forecast,
     ErrorMessages,
-    Search
+    Search,
+    DarkMode
   },
 
   data: () => ({
@@ -263,6 +270,7 @@ export default {
 <style scoped>
 .map {
   --fa-animation-duration: 3s;
+  margin-right: 8px;
 }
 
 .weather-title {
@@ -276,7 +284,6 @@ export default {
 }
 
 .weather {
-  width: 80vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -293,10 +300,12 @@ export default {
 }
 
 .geolocation {
-  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+  padding-bottom: 15px;
   cursor: pointer;
   color: var(--white);
-  margin-right: 200px;
 }
 
 .geolocation>span {

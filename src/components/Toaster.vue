@@ -1,10 +1,11 @@
 <template>
   <Transition>
     <div class="container" v-if="toastersStore.toasters.length">
-      <div class="toaster" v-for="(toaster, index) in toastersStore.toasters" :key="index">
+      <div class="toaster" :class="isDark ? 'dark-mode' : 'light-mode'" v-for=" (toaster, index) in
+        toastersStore.toasters" :key="index">
         <div class="toaster-content">
           {{ toaster.message }} - {{ toaster.name }}
-          <font-awesome-icon @click="close(index)" class="close" :icon="['fas', 'xmark']" />
+          <font-awesome-icon @click="close(index)" class="close" :class="darkModeClass" :icon="['fas', 'xmark']" />
         </div>
       </div>
     </div>
@@ -15,12 +16,32 @@
 import { useToastersStore } from '@/stores/toaster'
 import { mapStores } from 'pinia'
 
+import { dark } from '@/helpers/dark-toggle'
+import { useToggle } from '@vueuse/shared'
+import { isDark } from '../services/dark'
+import { useDark } from '@vueuse/core'
+const toggleDark = useToggle(isDark)
+
+
 
 export default {
   name: 'Toaster',
 
+  data: () => ({
+    isDark: useDark({
+      selector: 'html',
+      attribute: 'class',
+      valueDark: 'dark',
+      valueLight: 'light',
+    }),
+  }),
+
   computed: {
-    ...mapStores(useToastersStore)
+    ...mapStores(useToastersStore),
+
+    darkModeClass() {
+      return dark(this.isDark);
+    },
   },
 
   methods: {
@@ -50,11 +71,10 @@ export default {
 }
 
 .toaster {
-  min-width: 250px;
+  width: 350px;
   min-height: 60px;
   margin-bottom: 10px;
   border-radius: 8px;
-  background-color: lightgray;
   box-shadow: var(--box-shadow);
 }
 
@@ -67,6 +87,7 @@ export default {
 
 .close {
   cursor: pointer;
+  margin-top: 5px;
 }
 
 /* Responsive */
@@ -89,7 +110,6 @@ export default {
   }
 
   .toaster {
-    min-width: 350px;
     min-height: 30px;
   }
 }
