@@ -1,6 +1,10 @@
 # weather
 
-This template should help get you started developing with Vue 3 in Vite.
+Weather est une application qui a pour simple but de montrer la météo.
+L'api utilisée provient de : [Open Weather Map](https://openweathermap.org/)
+Elle a été conçue en vue 3 (option API) et TypeScript.
+
+Vous pouvez la consulter sur le lien suivant : [Weather](https://my-weatherpls.netlify.app/)
 
 ## Recommended IDE Setup
 
