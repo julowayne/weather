@@ -21,6 +21,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.5",
     "@vueuse/core": "^10.7.0",
     "axios": "^1.6.2",
+    "bootstrap": "^5.3.3",
     "dayjs": "^1.11.10",
     "pinia": "^2.1.7",
     "vue": "^3.3.4",
