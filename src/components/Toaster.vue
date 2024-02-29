@@ -15,7 +15,6 @@
 <script lang="ts">
 import { useToastersStore } from '@/stores/toaster'
 import { mapStores } from 'pinia'
-
 import { dark } from '@/helpers/dark-toggle'
 import { useToggle } from '@vueuse/shared'
 import { isDark } from '../services/dark'

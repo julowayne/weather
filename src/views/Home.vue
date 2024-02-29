@@ -10,6 +10,11 @@
           <span :class="darkModeClass">Geolocate me</span>
         </div>
         <div>
+          <button type="button" class="btn btn-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+            aria-controls="offcanvasRight">historic</button>
+          <SideBar />
+        </div>
+        <div>
           <DarkMode />
         </div>
       </div>
@@ -37,6 +42,7 @@
 </template>
 
 <script lang="ts">
+
 import { dark } from '@/helpers/dark-toggle'
 import { WeatherApi } from '@/services/weather'
 import { mapStores } from 'pinia'
@@ -47,6 +53,7 @@ import Forecast from '@/components/Forecast.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 import Search from '@/components/Search.vue'
 import DarkMode from '@/components/DarkMode.vue';
+import SideBar from '@/components/sideBar.vue'
 
 
 
@@ -65,7 +72,8 @@ export default {
     Forecast,
     ErrorMessages,
     Search,
-    DarkMode
+    DarkMode,
+    SideBar
   },
 
   data: () => ({
