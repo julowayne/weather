@@ -4,14 +4,14 @@
       <div class="toaster" :class="isDark ? 'dark-mode' : 'light-mode'" v-for=" (toaster, index) in
         toastersStore.toasters" :key="index">
         <div class="toaster-content">
-          {{ toaster.message }} - {{ toaster.name }}
+          {{ toaster.message }}
           <font-awesome-icon @click="close(index)" class="close" :class="darkModeClass" :icon="['fas', 'xmark']" />
         </div>
       </div>
     </div>
   </Transition>
 </template>
-  
+
 <script lang="ts">
 import { useToastersStore } from '@/stores/toaster'
 import { mapStores } from 'pinia'
@@ -50,7 +50,7 @@ export default {
   },
 }
 </script>
-  
+
 <style scoped>
 .container {
   position: absolute;
@@ -113,4 +113,3 @@ export default {
   }
 }
 </style>
-  

@@ -3,7 +3,6 @@ import { defineStore } from 'pinia'
 
 export interface Toaster {
   message: string
-  name: string
   timeout?: number
 }
 

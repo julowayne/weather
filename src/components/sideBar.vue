@@ -6,35 +6,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <div class="searched">
-                    <div>Houilles - 78</div>
+                <div class="searched" v-for="(search, index) in searchStore.searches" :key="index">
+                    <div>{{ search.city}} - {{ search.temperature }}</div>
                     <div>
-                        <font-awesome-icon :icon="['fas', 'trash-can']" />
+                        <font-awesome-icon @click="deleteSearch(index)" :icon="['fas', 'trash-can']" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-  
-<script lang="ts">
 
+<script lang="ts">
+import { mapStores } from 'pinia'
+import { useSearchStore } from '@/stores/search';
 
 
 export default {
     name: 'sideBar',
-
-
-    data: () => ({
-
-    }),
+    computed: {
+        ...mapStores(useSearchStore),
+    },
 
     methods: {
-
-    },
+        deleteSearch(index: number){
+            this.searchStore.delete(index)
+        }
+    }
 }
 </script>
-  
+
 <style scoped>
 .searched {
     display: flex;
@@ -51,4 +52,3 @@ export default {
     background-color: #17a2b8;
 }
 </style>
-  

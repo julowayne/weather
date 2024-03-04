@@ -45,8 +45,9 @@
 
 import { dark } from '@/helpers/dark-toggle'
 import { WeatherApi } from '@/services/weather'
-import { mapStores } from 'pinia'
 import { useToastersStore } from '@/stores/toaster'
+import { useSearchStore } from '@/stores/search';
+import { mapStores } from 'pinia'
 import { useDark } from '@vueuse/core'
 import Today from '@/components/Today.vue'
 import Forecast from '@/components/Forecast.vue'
@@ -100,7 +101,7 @@ export default {
   }),
 
   computed: {
-    ...mapStores(useToastersStore),
+    ...mapStores(useToastersStore, useSearchStore),
 
     darkModeClass() {
       return dark(this.isDark);
@@ -190,7 +191,8 @@ export default {
         this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
       }
 
-      this.toastersStore.create({ message: `You were looking for ${city}`, name: "Jules" })
+      this.toastersStore.create({ message: `You were looking for ${city}`})
+      this.searchStore.add({city: `${city}`, temperature: this.todayTemperature})
 
     },
 
