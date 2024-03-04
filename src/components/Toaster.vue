@@ -53,10 +53,11 @@ export default {
 
 <style scoped>
 .container {
+  width: 350px;
   position: absolute;
   overflow: hidden;
-  right: 10px;
-  bottom: 10px;
+  right: 2rem;
+  bottom: 1rem;
 }
 
 .v-enter-active,
@@ -70,7 +71,7 @@ export default {
 }
 
 .toaster {
-  width: 350px;
+  width: 100%;
   min-height: 60px;
   margin-bottom: 10px;
   border-radius: 8px;

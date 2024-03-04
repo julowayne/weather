@@ -60,6 +60,7 @@ input {
   border-radius: 6px;
   margin-bottom: 15px;
   font-size: var(--font-larger);
+  color: black;
   font-weight: 500;
   padding: 0 35px;
   box-shadow: var(--box-shadow);

@@ -13,8 +13,8 @@ export default {
   <header>
     <div class="wrapper">
       <RouterView />
-      <Toasters />
     </div>
+    <Toasters />
   </header>
 </template>
 
@@ -23,4 +23,3 @@ export default {
   width: 350px;
 }
 </style>
-

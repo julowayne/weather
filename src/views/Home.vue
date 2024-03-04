@@ -30,7 +30,8 @@
       </div>
       <div v-if="!isRequestLoading">
         <div v-if="todayTemperature !== null && todayTemperature !== undefined && !errors.length" class="container">
-          <Today :todayTemperature="todayTemperature" :hour="hour" :condition="condition" :TodayDetails="TodayDetails" />
+          <Today :todayTemperature="todayTemperature" :hour="hour" :condition="condition"
+            :TodayDetails="TodayDetails" />
           <Forecast :weathers="weathers" />
         </div>
       </div>
@@ -191,8 +192,8 @@ export default {
         this.TodayDetails = this.getTodayDetailsData(fiveDaysForecast)
       }
 
-      this.toastersStore.create({ message: `You were looking for ${city}`})
-      this.searchStore.add({city: `${city}`, temperature: this.todayTemperature})
+      this.toastersStore.create({ message: `You were looking for ${city}`, timeout: 2000 })
+      this.searchStore.add({ city: `${city}`, temperature: this.todayTemperature })
 
     },
 
