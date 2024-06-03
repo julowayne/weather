@@ -27,8 +27,10 @@ export const useToastersStore = defineStore('toasters', {
     },
 
     close(index: number) {
+
       return this.toasters.splice(index, 1)
     }
+
 
   },
 })

@@ -9,8 +9,8 @@
           <font-awesome-icon :class="darkModeClass" class="fa-2xl fa-flip map" :icon="['fas', 'globe']" />
           <span :class="darkModeClass">Geolocate me</span>
         </div>
-        <div>
-          <button type="button" class="btn btn-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+        <div v-if="searchStore.searches.length">
+          <button type="button" class="btn btn-sm btn-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight">historic</button>
           <SideBar />
         </div>

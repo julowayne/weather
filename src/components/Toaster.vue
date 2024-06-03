@@ -41,12 +41,27 @@ export default {
     darkModeClass() {
       return dark(this.isDark);
     },
+    autoclose() {
+      console.log("yoyo")
+      return this.toastersStore.toasters.forEach((toaster, index) => {
+        console.log(toaster.timeout)
+        if (toaster.timeout) {
+          setTimeout(() => {
+            this.close(index);
+          }, toaster.timeout);
+        }
+      })
+    }
   },
 
   methods: {
     close(index: number) {
       this.toastersStore.close(index)
     }
+  },
+
+  mounted() {
+    this.autoclose
   },
 }
 </script>
